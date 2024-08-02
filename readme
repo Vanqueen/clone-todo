@@ -1,0 +1,47 @@
+Ce code est un gestionnaire de route pour une application Express.js qui permet de supprimer une tâche spécifique d'une liste de tâches. 
+Voici une explication détaillée de chaque partie du code :
+
+// Supprimer une tâche
+app.delete('/api/todos/:id', (req, res) => {
+// ...
+});
+
+•  app.delete : C'est une méthode d'Express.js utilisée pour définir une route qui réagit aux requêtes HTTP DELETE. Elle est utilisée ici 
+pour supprimer des données, ce qui est conforme à la sémantique des méthodes HTTP.
+
+•  '/api/todos/:id' : C'est le chemin de la route. :id est un paramètre de route qui représente l'identifiant unique de la tâche à supprimer.
+
+•  (req, res) => {} : C'est une fonction fléchée qui est appelée lorsque la route est sollicitée. req est l'objet de la requête, et res est l'objet de la réponse.
+
+const { id } = req.params;
+
+•  req.params : C'est un objet contenant les paramètres de route; ici, il contient l'id de la tâche à supprimer.
+
+•  { id } : C'est une déstructuration de l'objet req.params pour extraire directement l'id.
+
+const index = todos.findIndex(t => t.id === parseInt(id));
+
+•  todos : C'est le tableau contenant les tâches.
+
+•  findIndex : C'est une méthode de tableau qui retourne l'index de la première occurrence dans le tableau qui satisfait la condition fournie.
+
+•  t => t.id === parseInt(id) : C'est une fonction de rappel qui compare l'id de chaque tâche (converti en nombre avec parseInt) avec l'id fourni dans la requête.
+
+if (index !== -1) {
+const deletedTodo = todos.splice(index, 1);
+res.json(deletedTodo);
+} else {
+res.status(404).send('Tâche non trouvée');
+}
+
+•  if (index !== -1) : Vérifie si la tâche a été trouvée dans le tableau (un index de -1 signifierait que la tâche n'a pas été trouvée).
+
+•  todos.splice(index, 1) : Supprime 1 élément à l'index trouvé, ce qui enlève la tâche du tableau.
+
+•  const deletedTodo : Stocke la tâche supprimée retournée par splice.
+
+•  res.json(deletedTodo) : Envoie la tâche supprimée en réponse au client au format JSON.
+
+•  res.status(404).send('Tâche non trouvée') : Si la tâche n'est pas trouvée, envoie une réponse avec le statut HTTP 404 et un message indiquant que la tâche n'a pas été trouvée.
+
+En résumé, ce code permet de supprimer une tâche de la liste en fonction de son identifiant et de renvoyer la tâche supprimée ou un message d'erreur si l'identifiant ne correspond à aucune tâche. Si vous avez besoin de plus d'informations ou d'aide supplémentaire, n'hésitez pas à demander !
